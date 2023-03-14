@@ -63,10 +63,16 @@ def get_s3_session(url, method="fetch"):
 
     session = Session(**s3_connection)
     # if no access credentials provided above, then access anonymously
-    if not session.get_credentials():
-        s3_client_args["config"] = Config(signature_version=UNSIGNED)
+    ## if not session.get_credentials():
+    ##     s3_client_args["config"] = Config(signature_version=UNSIGNED)
 
-    client = session.client("s3", **s3_client_args)
+    ## client = session.client("s3", **s3_client_args)
+    client = session.client(
+        service_name="s3",
+        aws_access_key_id="",
+        aws_secret_access_key="",
+        endpoint_url="https://swift.rc.nectar.org.au/",
+    )
     client.ClientError = ClientError
 
     # Cache the client.

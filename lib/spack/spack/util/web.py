@@ -145,7 +145,13 @@ def push_to_url(local_file_path, remote_path, keep_original=True, extra_args=Non
             remote_path = remote_path[1:]
 
         s3 = s3_util.get_s3_session(remote_url, method="push")
-        s3.upload_file(local_file_path, remote_url.netloc, remote_path, ExtraArgs=extra_args)
+        ## s3.upload_file(local_file_path, remote_url.netloc, remote_path, ExtraArgs=extra_args)
+        s3.upload_file(
+            local_file_path, # File name
+            "access-nri.spack.cache", # Bucket name
+            remote_path, # Object name
+            ExtraArgs=extra_args
+        )
 
         if not keep_original:
             os.remove(local_file_path)
@@ -382,7 +388,8 @@ def remove_url(url, recursive=False):
     if url.scheme == "s3":
         # Try to find a mirror for potential connection information
         s3 = s3_util.get_s3_session(url, method="push")
-        bucket = url.netloc
+        ## bucket = url.netloc
+        bucket = "access-nri.spack.cache"
         if recursive:
             # Because list_objects_v2 can only return up to 1000 items
             # at a time, we have to paginate to make sure we get it all
@@ -458,7 +465,8 @@ def _list_s3_objects(client, bucket, prefix, num_entries, start_after=None):
 
 def _iter_s3_prefix(client, url, num_entries=1024):
     key = None
-    bucket = url.netloc
+    ## bucket = url.netloc
+    bucket = "access-nri.spack.cache"
     prefix = re.sub(r"^/*", "/", url.path)
 
     while True:
