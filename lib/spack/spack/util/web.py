@@ -136,7 +136,7 @@ def push_to_url(local_file_path, remote_path, keep_original=True, extra_args=Non
                 else:
                     raise
 
-    elif remote_url.scheme == "s3":
+    elif remote_url.scheme == "s3" or remote_url.scheme == "https":
         if extra_args is None:
             extra_args = {}
 
@@ -145,11 +145,19 @@ def push_to_url(local_file_path, remote_path, keep_original=True, extra_args=Non
             remote_path = remote_path[1:]
 
         s3 = s3_util.get_s3_session(remote_url, method="push")
+
+        if remote_url.scheme == "s3":
+            bucket_name = remote_url.netloc
+            object_path = remote_path
+        elif remote_url.scheme == "https":
+            # Assume OpenStack-type URL
+            bucket_name, object_path = remote_path.split("/", 1)
+
         ## s3.upload_file(local_file_path, remote_url.netloc, remote_path, ExtraArgs=extra_args)
         s3.upload_file(
             local_file_path, # File name
-            "access-nri.spack.cache", # Bucket name
-            remote_path, # Object name
+            bucket_name, # Bucket name
+            object_path, # Object name
             ExtraArgs=extra_args
         )
 
