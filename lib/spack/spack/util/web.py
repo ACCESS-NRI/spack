@@ -475,7 +475,8 @@ def _iter_s3_prefix(client, url, num_entries=1024):
     key = None
     ## bucket = url.netloc
     bucket = "access-nri.spack.cache"
-    prefix = re.sub(r"^/*", "/", url.path)
+    ## prefix = re.sub(r"^/*", "/", url.path)
+    prefix = "/" + url.path.split("/", 2)[2]
 
     while True:
         contents, key = _list_s3_objects(client, bucket, prefix, num_entries, start_after=key)
@@ -506,7 +507,7 @@ def list_url(url, recursive=False):
             if os.path.isfile(os.path.join(local_path, subpath))
         ]
 
-    if url.scheme == "s3":
+    if url.scheme == "s3" or "https":
         s3 = s3_util.get_s3_session(url, method="fetch")
         if recursive:
             return list(_iter_s3_prefix(s3, url))
