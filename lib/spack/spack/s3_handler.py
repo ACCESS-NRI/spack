@@ -46,8 +46,12 @@ def _s3_open(url, method="GET"):
     parsed = urllib.parse.urlparse(url)
     s3 = s3_util.get_s3_session(url, method="fetch")
 
-    bucket = parsed.netloc
-    key = parsed.path
+    if parsed.scheme == "s3":
+        bucket = parsed.netloc
+        key = parsed.path
+    elif parsed.scheme == "https":
+        # Assume OpenStack-type URL
+        bucket, key = parsed.path.split("/", 1)
 
     if key.startswith("/"):
         key = key[1:]
