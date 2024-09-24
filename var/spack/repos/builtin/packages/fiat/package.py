@@ -54,7 +54,7 @@ class Fiat(CMakePackage):
                 [
                     self.define("CMAKE_C_COMPILER", self.spec["mpi"].mpicc),
                     self.define("CMAKE_CXX_COMPILER", self.spec["mpi"].mpicxx),
-                    self.define("CMAKE_Fortran_COMPILER", self.spec["mpi"].mpifc)
+                    self.define("CMAKE_Fortran_COMPILER", self.spec["mpi"].mpifc),
                 ]
             )
         return args
