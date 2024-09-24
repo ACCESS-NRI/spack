@@ -50,8 +50,11 @@ class Fiat(CMakePackage):
             self.define_from_variant("ENABLE_FCKIT", "fckit"),
         ]
         if "+mpi" in self.spec:
-            args.extend([
-                self.define("CMAKE_C_COMPILER", self.spec["mpi"].mpicc),
-                self.define("CMAKE_CXX_COMPILER", self.spec["mpi"].mpicxx),
-                self.define("CMAKE_Fortran_COMPILER", self.spec["mpi"].mpifc)])
+            args.extend(
+                [
+                    self.define("CMAKE_C_COMPILER", self.spec["mpi"].mpicc),
+                    self.define("CMAKE_CXX_COMPILER", self.spec["mpi"].mpicxx),
+                    self.define("CMAKE_Fortran_COMPILER", self.spec["mpi"].mpifc)
+                ]
+            )
         return args
