@@ -11,14 +11,15 @@ class Fiat(CMakePackage):
     Fortran utility libraries, extracted from the IFS/Arpege model."""
 
     homepage = "https://github.com/ecmwf-ifs/fiat"
-    git = "https://github.com/ecmwf-ifs/fiat.git"
+    git = "https://github.com/ACCESS-NRI/fiat.git"
     url = "https://github.com/ecmwf-ifs/fiat/archive/1.0.0.tar.gz"
 
-    maintainers("climbfuji")
+    maintainers("climbfuji", "penguian")
 
     license("Apache-2.0")
 
     version("main", branch="main", no_cache=True)
+    version("um", branch="um", no_cache=True)
     version("1.2.0", sha256="758147410a4a3c493290b87443b4091660b915fcf29f7c4d565c5168ac67745f")
     version("1.1.0", sha256="58354e60d29a1b710bfcea9b87a72c0d89c39182cb2c9523ead76a142c695f82")
     version("1.0.0", sha256="45afe86117142831fdd61771cf59f31131f2b97f52a2bd04ac5eae9b2ab746b8")
@@ -39,7 +40,7 @@ class Fiat(CMakePackage):
     depends_on("eckit", when="+fckit")
     depends_on("fckit", when="+fckit")
 
-    patch("intel_warnings_v110.patch", when="@:1.1.0")
+    patch("intel_warnings_v110.patch", when="@0:1.1.0")
     patch("intel_warnings_v120.patch", when="@1.2.0:")
 
     def cmake_args(self):
@@ -48,5 +49,9 @@ class Fiat(CMakePackage):
             self.define_from_variant("ENABLE_MPI", "mpi"),
             self.define_from_variant("ENABLE_FCKIT", "fckit"),
         ]
-
+        if "+mpi" in self.spec:
+            args.extend([
+                self.define("CMAKE_C_COMPILER", self.spec["mpi"].mpicc),
+                self.define("CMAKE_CXX_COMPILER", self.spec["mpi"].mpicxx),
+                self.define("CMAKE_Fortran_COMPILER", self.spec["mpi"].mpifc)])
         return args
