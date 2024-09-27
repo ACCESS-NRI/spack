@@ -7,5 +7,5 @@ This is a fork of the upstream Spack repository. The `access-nri` branch only co
 For example, to clone a release branch `releases/v0.22` of the `ACCESS-NRI` fork of spack, run:
 
 ```bash
-git clone -c feature.manyFiles=true https://github.com/ACCESS-NRI/spack.git --branch releases/v0.22 --single-branch
+git clone -c feature.manyFiles=true https://github.com/ACCESS-NRI/spack.git --branch releases/v0.22
 ```
