@@ -55,6 +55,7 @@ class Parallelio(CMakePackage):
     depends_on("netcdf-c ~mpi", type="link", when="~mpi")
     depends_on("netcdf-fortran", type="link", when="+fortran")
     depends_on("parallel-netcdf", type="link", when="+pnetcdf")
+    depends_on("netcdf-c ~parallel-netcdf", type="link", when="~pnetcdf")
 
     resource(name="genf90", git="https://github.com/PARALLELIO/genf90.git", tag="genf90_200608")
     resource(
