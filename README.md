@@ -9,3 +9,7 @@ For example, to clone a release branch `releases/v0.22` of the `ACCESS-NRI` fork
 ```bash
 git clone -c feature.manyFiles=true https://github.com/ACCESS-NRI/spack.git --branch releases/v0.22
 ```
+
+## Pull Requests
+
+Please add `harshula` as reviewer to any PRs for this repository.
