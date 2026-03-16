@@ -9,12 +9,15 @@ include:
 
   # site configuration scope
   - name: "site"
-    path: "$spack/etc/spack/site"
-    optional: true
+    path: "$spack/../spack-config/v1.1/gadi"
+    when: '"gadi.nci.org.au" in hostname'
+
+  # site configuration scope
+  - name: "site"
+    path: "$spack/../spack-config/v1.1/ci"
+    when: '"gadi.nci.org.au" not in hostname'
 
   # system configuration scope
   - name: "system"
     path_override_env_var: SPACK_SYSTEM_CONFIG_PATH
-    path: "/etc/spack"
-    optional: true
-    when: '"SPACK_DISABLE_LOCAL_CONFIG" not in env'
+    path: "$spack/../spack-config/v1.1"
