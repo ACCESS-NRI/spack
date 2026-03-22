@@ -15,7 +15,7 @@ include:
   # site configuration scope
   - name: "site"
     path: "$spack/../spack-config/v1.1/ci"
-    when: '"gadi.nci.org.au" not in hostname'
+    when: '"SPACK_CI_CONFIG" in env'
 
   # system configuration scope
   - name: "system"
