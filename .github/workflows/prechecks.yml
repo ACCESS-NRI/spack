@@ -49,20 +49,24 @@ jobs:
         ref: main-shared
     - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       with:
+        path: spack
         fetch-depth: 2
     - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b
       with:
         python-version: '3.13'
     - name: Install Python packages
+      working-directory: spack
       run: |
         pip install -r .github/workflows/requirements/style/requirements.txt
         echo "PYTHONPATH=$PWD/lib/spack" >> $GITHUB_ENV
     - name: Run style tests (code)
+      working-directory: spack
       run: |
         bin/spack style --base HEAD^1
         bin/spack license verify
         pylint -j $(nproc) --disable=all --enable=unspecified-encoding --ignore-paths=lib/spack/spack/vendor lib
     - name: Run style tests (docs)
+      working-directory: spack
       run: .github/workflows/bin/format-rst.py $(git ls-files 'lib/spack/docs/*.rst')
 
 
@@ -82,7 +86,10 @@ jobs:
           path: spack-config
           ref: main-shared
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          path: spack
       - name: Setup repo and non-root user
+        working-directory: spack
         run: |
           git --version
           git config --global --add safe.directory '*'
@@ -92,6 +99,7 @@ jobs:
           chown -R spack-test .
       - name: Bootstrap Spack development environment
         shell: runuser -u spack-test -- bash {0}
+        working-directory: spack
         run: |
           source share/spack/setup-env.sh
           spack debug report
