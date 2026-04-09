@@ -46,6 +46,7 @@ jobs:
       with:
         repository: ACCESS-NRI/spack-config
         path: spack-config
+        ref: main-shared
     - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       with:
         fetch-depth: 2
@@ -79,6 +80,7 @@ jobs:
         with:
           repository: ACCESS-NRI/spack-config
           path: spack-config
+          ref: main-shared
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - name: Setup repo and non-root user
         run: |
