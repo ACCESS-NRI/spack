@@ -44,6 +44,10 @@ jobs:
     steps:
     - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       with:
+        repository: ACCESS-NRI/spack-config
+        path: spack-config
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      with:
         fetch-depth: 2
     - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b
       with:
@@ -71,6 +75,10 @@ jobs:
           dnf install -y \
               bzip2 curl file gcc-c++ gcc gcc-gfortran git gnupg2 gzip \
               make patch tcl unzip which xz
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          repository: ACCESS-NRI/spack-config
+          path: spack-config
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - name: Setup repo and non-root user
         run: |
