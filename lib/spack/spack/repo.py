@@ -1748,8 +1748,8 @@ class RemoteRepoDescriptor(RepoDescriptor):
                             remote = output.strip()
                         except spack.util.executable.ProcessError:
                             pass
-                        if (force):
-                            spack.util.git.reset_hard_branch(
+                        if force:
+                            spack.util.git.force_checkout_branch(
                                 self.branch,
                                 remote=remote,
                                 depth=depth,
